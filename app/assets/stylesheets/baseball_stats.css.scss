@@ -2,12 +2,19 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+#nav
+{
+	margin: 20px;
 
+}
 .main_content
 {
-	width: 1024px; height:768px;
+	width: 1024px; 
+	padding: 100px 20px ;
 	margin: 0 auto;
 	background: #cccccc;
+	text-align: center;
+
 }
 
 #main_content

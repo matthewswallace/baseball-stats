@@ -8,6 +8,7 @@ class BaseballStatsController < ApplicationController
 		batting_averages = BattingAverage.where("yearID > ? and yearID < ? and AB > ?", 
 												2008, 2013,199 ).order("yearID asc")
 
+		batting_averages = batting_averages.sort_by {|a| a.average}
 		user = nil
 		
 		most_improved = 0
@@ -15,13 +16,16 @@ class BaseballStatsController < ApplicationController
 		current_imporved = 0
 		bat_average1 = 0
 		bat_average3 = 0
-
+		ba1 = nil
+		ba2 = nil
 		batting_averages.each do |ba|
 			
 			if ba.yearID == 2009
 				bat_average1 = ba.AB / ba.H
+				ba1 = ba
 			elsif ba.yearID == 2010
 				bat_average3 = ba.AB / ba.H
+				ba2 = ba
 			end
 
 			
@@ -36,7 +40,7 @@ class BaseballStatsController < ApplicationController
 			end
 		end	
 
-		render :json => {batting_average: most_improved_average, improved_average:most_improved, user: user}
+		render :json => {ba1: ba1, ba2:ba2, improved_average:most_improved, user: user}
 	end
 
 	def slugging_percentage
@@ -71,6 +75,7 @@ class BaseballStatsController < ApplicationController
 		most_points_improved = 0
 		current_points_imporoved = 0
 		top_five = []
+		prev_user = nil
 
 		batting_averages.each do |average|
 			user_averages = batting_averages.where("user_id = ?", average.user.id)
@@ -82,14 +87,16 @@ class BaseballStatsController < ApplicationController
 					av1 = ua.fantasy_points
 				elsif ua.yearID == 2012
 					av2 = ua.fantasy_points
+					top_five << {points_imporved:av2 - av1, user: average.user, av1:av1, av2:av2, averages:user_averages}
+
 				end
 			end
-			if user_averages.count == 2
-				top_five << {points_imporved:av2 - av1, user: average.user, av1:av1, av2:av2, averages:user_averages}
-			end
-		end
 
-		render :json => {top_five:top_five.sort_by {|hsh| hsh[:points_imporved]}}
+			
+		end
+		top_five.sort_by! {|hsh| hsh[:points_imporved]}
+		
+		render :json => {top_five:top_five.reverse!}
 	end
 
 	def trip_crown_winner
