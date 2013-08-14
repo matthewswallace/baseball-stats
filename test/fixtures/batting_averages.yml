@@ -1,0 +1,53 @@
+# == Schema Information
+#
+# Table name: batting_averages
+#
+#  id         :integer          not null, primary key
+#  TWOB       :integer
+#  TREEB      :integer
+#  AB         :integer
+#  CS         :integer
+#  G          :integer
+#  H          :integer
+#  HR         :integer
+#  R          :integer
+#  RBI        :integer
+#  SB         :integer
+#  teamID     :string(255)
+#  user_id    :integer
+#  yearID     :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  TWOB: 1
+  TREEB: 1
+  AB: 1
+  CS: 1
+  G: 1
+  H: 1
+  HR: 1
+  R: 1
+  RBI: 1
+  SB: 1
+  teamID: MyString
+  user_id: 1
+  yearID: 1
+
+two:
+  TWOB: 1
+  TREEB: 1
+  AB: 1
+  CS: 1
+  G: 1
+  H: 1
+  HR: 1
+  R: 1
+  RBI: 1
+  SB: 1
+  teamID: MyString
+  user_id: 1
+  yearID: 1
